@@ -21,16 +21,16 @@ public class LoginServer extends HttpServlet {
         System.out.println("login-doget");
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("UTF-8");
-        String user_name = request.getParameter("username");
-        String user_pw = request.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         PrintWriter out = response.getWriter();
         //调用数据库
         // 直接调用DB中的静态方法来为本类服务
         Connection conn = DatabaseManager.getConnection();
         Statement stmt = DatabaseManager.getStatement(conn);
-        String sql = "select * from users where user_name='" + user_name
-                + "' and user_password='" + user_pw + "'";
+        String sql = "select * from users where username='" + username
+                + "' and password='" + password + "'";
         ResultSet rs = DatabaseManager.getResultSet(stmt, sql);
 
         String url;
@@ -39,7 +39,7 @@ public class LoginServer extends HttpServlet {
                 System.out.println("login sucess");
                out.print("true");
             } else {
-                System.out.println("login failed......");
+                System.out.println("login failed");
                 out.print("false");
             }
         } catch (SQLException e) {

@@ -21,14 +21,14 @@ public class RegisterServer extends HttpServlet {
         System.out.println("register-doPost");
         System.out.println("register-doget");
         request.setCharacterEncoding("UTF-8");
-        String user_name = request.getParameter("username");
-        String user_pw = request.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         PrintWriter out = response.getWriter();
         //调用数据库
         // 直接调用DB中的静态方法来为本类服务
         Connection conn = DatabaseManager.getConnection();
         Statement stmt = DatabaseManager.getStatement(conn);
-        String sql =  "select * from users where user_name='" + user_name
+        String sql =  "select * from users where username='" + username
                 + "'";
         ResultSet rs = DatabaseManager.getResultSet(stmt, sql);
         try {
@@ -36,7 +36,7 @@ public class RegisterServer extends HttpServlet {
                 System.out.println("账号已存在");
                 out.print("false");
             } else {
-                String sqlInsert = "insert into users values('"+ user_name +"','" + user_pw + "')";
+                String sqlInsert = "insert into users values('"+ username +"','" + password + "')";
                 DatabaseManager.elsql(stmt,sqlInsert);
                 System.out.println("账号已增加");
                 out.print("true");
